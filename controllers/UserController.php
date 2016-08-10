@@ -39,7 +39,7 @@ class UserController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            $this->redirect('/payment/index');
         }
 
         $model = new LoginForm();
@@ -86,6 +86,6 @@ class UserController extends Controller
     {
         Yii::$app->user->logout();
 
-        $this->redirect('login');
+        $this->redirect('user/login');
     }
 }

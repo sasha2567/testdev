@@ -48,7 +48,7 @@ class PaymentController extends Controller
         $query      = Payment::getAllPayments();
         $countQuery = clone $query;
         $pages      = new Pagination(['totalCount' => $countQuery->count()]);
-        $listing    = $query->orderBy('id DESC')->offset($pages->offset)->limit($pages->limit)->all();
+        $listing    = $query->orderBy('payment_id DESC')->offset($pages->offset)->limit($pages->limit)->all();
         $first      = HelperArray::first($listing);
         $last       = HelperArray::last($listing);
 

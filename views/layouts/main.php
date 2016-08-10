@@ -29,7 +29,7 @@ AppAsset::register($this);
     if (!Yii::$app->user->isGuest) {
         NavBar::begin([
             'brandLabel' => 'Application',
-            'brandUrl' => Yii::$app->homeUrl,
+            'brandUrl' => '/payment/index',
             'options' => [
                 'class' => 'navbar-inverse',
             ],
