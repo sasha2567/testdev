@@ -9,9 +9,11 @@
 namespace app\controllers;
 
 
+use Yii;
 use app\models\Payment;
 use yii\web\Controller;
 use yii\data\Pagination;
+use app\components\helpers\HelperArray;
 
 
 class PaymentController extends Controller
@@ -33,32 +35,34 @@ class PaymentController extends Controller
     }
 
     /**
-     * Payment action.
+     * Payment page action.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $query = Payment::getAllPayments();
-        // get the total number of payment
-        $count = $query->count();
-        $data = null;
-        $pagination = null;
-        if($count){
-            // create a pagination object with the total count
-            $pagination = new Pagination(['totalCount' => $count]);
-            // limit the query using the pagination and retrieve the data
-            $data = $query->offset($pagination->offset)
-                ->limit($pagination->limit)
-                ->all();
+        if (Yii::$app->user->isGuest) {
+            $this->redirect('user/login');
         }
-        foreach ($data as $row){
+
+        $query      = Payment::getAllPayments();
+        $countQuery = clone $query;
+        $pages      = new Pagination(['totalCount' => $countQuery->count()]);
+        $listing    = $query->orderBy('id DESC')->offset($pages->offset)->limit($pages->limit)->all();
+        $first      = HelperArray::first($listing);
+        $last       = HelperArray::last($listing);
+
+        $data = [
+            'pages'    => $pages,
+            'listing'  => $listing,
+            'start_at' => $first ? Payment::getDateOnFormat($first->start_at) : null,
+            'end_at'   => $last ? Payment::getDateOnFormat($last->end_at) : null,
+        ];
+        foreach ($listing as $row){
             $row->ends_at = Payment::getDateOnFormat($row->ends_at);
             $row->starts_at = Payment::getDateOnFormat($row->starts_at);
         }
-        $start = Payment::getStartData();
-        $end = Payment::getEndData();
-        return $this->render('payment', ['start' => $start, 'end' => $end, 'data' => $data, 'pagination' => $pagination]);
+        return $this->render('payment', $data);
     }
 
     /**

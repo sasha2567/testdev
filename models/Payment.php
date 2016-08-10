@@ -33,7 +33,9 @@ class Payment extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * Get payment by $id
+     *
+     * @return ActiveRecord
      */
     public static function findIdentity($id)
     {
@@ -43,6 +45,7 @@ class Payment extends ActiveRecord
     /**
      * Get last payment record
      *
+     * @param $data
      * @return ActiveRecord
      */
     public static function getLastPaymentRecord()
@@ -51,13 +54,10 @@ class Payment extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * Save new payment record by last date from base
+     *
+     * @return bool
      */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    }
-
     public static function generateNext()
     {
         $payment = new Payment();
@@ -93,11 +93,20 @@ class Payment extends ActiveRecord
         return $payment->save();
     }
 
+    /**
+     * For join with User table
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['user_id' => 'user_userid']);
     }
 
+    /**
+     * Get query for find all
+     * @return \yii\db\ActiveQuery
+     */
     public static function getAllPayments()
     {
         $query = Payment::find()
@@ -108,12 +117,11 @@ class Payment extends ActiveRecord
         return $query;
     }
 
-    public static function getStartData()
-    {
-        $dataStr = ($data = self::getAllPayments()->orderBy('starts_at')->limit('1')->one()) ? $data->starts_at : '';
-        return self::getDateOnFormat($dataStr);
-    }
-
+    /**
+     * Get right format for date
+     * @param $data
+     * @return bool|int|string
+     */
     public static function getDateOnFormat($data)
     {
         $dataStr = strtotime($data);
@@ -121,12 +129,30 @@ class Payment extends ActiveRecord
         return $dataStr;
     }
 
+    /**
+     * Get first payment date
+     * @return bool|int|string
+     */
+    public static function getStartData()
+    {
+        $dataStr = ($data = self::getAllPayments()->orderBy('starts_at')->limit('1')->one()) ? $data->starts_at : '';
+        return self::getDateOnFormat($dataStr);
+    }
+
+    /**
+     * Get last payment date
+     * @return bool|int|string
+     */
     public static function getEndData()
     {
         $dataStr = ($data = self::getAllPayments()->orderBy('ends_at desc')->limit('1')->one()) ? $data->ends_at : '';
         return self::getDateOnFormat($dataStr);
     }
 
+    /**
+     * Delete payment by 'payment_id' = $id
+     * @param $id
+     */
     public function paymentDelete($id)
     {
         $payment = Payment::findOne($id);

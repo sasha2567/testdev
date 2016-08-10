@@ -45,7 +45,7 @@ class UserController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $this->redirect('../site/index');
+            $this->redirect('/payment/index');
         }
 
         return $this->render('login', [

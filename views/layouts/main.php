@@ -26,34 +26,60 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+    if (!Yii::$app->user->isGuest) {
+        NavBar::begin([
+            'brandLabel' => 'Application',
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar-inverse',
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-left'],
+            'items' => [
+                ['label' => 'Home', 'url' => ['/payment/index']],
+                ['label' => 'Payment', 'url' => ['/payment/index']],
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right login-logout'],
+            'items' => [
+            (Yii::$app->user->isGuest) ? (
+
+                ['label' => 'Login', 'url' => ['/user/login']]
+
             ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::beginForm(['/user/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Logout (' . Yii::$app->user->identity->email . ')',
                     ['class' => 'btn btn-link']
                 )
                 . Html::endForm()
                 . '</li>'
             )
-        ],
-    ]);
-    NavBar::end();
+            ],
+        ]);
+        NavBar::end();
+    }
+    else {
+        $brandLabel = 'Welcome to Application.';
+        switch(Yii::$app->controller->route) {
+            case 'user/login':
+                $brandLabel .= " Please Login";
+                break;
+            case 'user/registration':
+                $brandLabel .= " Please Register";
+                break;
+        }
+        NavBar::begin([
+            'brandLabel' => $brandLabel,
+            'options' => [
+                'class' => 'navbar-inverse',
+            ],
+        ]);
+        NavBar::end();
+    }
     ?>
 
     <div class="container">
