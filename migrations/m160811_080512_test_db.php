@@ -7,9 +7,17 @@ class m160811_080512_test_db extends Migration
 {
     public function up()
     {
+        $this->dropForeignKey(
+            'ffk-user-payment_id',
+            'alisjanskij_payments'
+        );
+
+        $this->dropTable('alisjanskij_users');
+
+        $this->dropTable('alisjanskij_payments');
         //$this->execute('CREATE SEQUENCE user_id_seq');
         $this->createTable('alisjanskij_users', [
-            'user_id' => 'SERIAL NOT NULL',// . ' DEFAULT NEXTVAL(\'user_id_seq\')',
+            'user_id' => 'SERIAL NOT NULL ' . $this->primaryKey(),// . ' DEFAULT NEXTVAL(\'user_id_seq\')',
             'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'password' => $this->text()->notNull(),
@@ -18,7 +26,7 @@ class m160811_080512_test_db extends Migration
 
         //$this->execute('CREATE SEQUENCE payment_id_seq');
         $this->createTable('alisjanskij_payments', [
-            'payment_id' => 'SERIAL NOT NULL',// . ' DEFAULT NEXTVAL(\'payment_id_seq\')',
+            'payment_id' => 'SERIAL NOT NULL'  . $this->primaryKey(),// . ' DEFAULT NEXTVAL(\'payment_id_seq\')',
             'starts_at' => $this->date()->notNull(),
             'ends_at' => $this->date()->notNull(),
             'user_userid' => $this->integer()->notNull(),
