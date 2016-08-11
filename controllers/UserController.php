@@ -63,7 +63,7 @@ class UserController extends Controller
             ]);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->registration()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->registration()) {
             $this->redirect('login');
         }
 
@@ -75,7 +75,6 @@ class UserController extends Controller
     /**
      * Logout action.
      *
-     * @return string
      */
     public function actionLogout()
     {

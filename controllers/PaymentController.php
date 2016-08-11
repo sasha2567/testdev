@@ -72,6 +72,7 @@ class PaymentController extends Controller
 
     /**
      * Delete payment record by $id
+     *
      * @param $id
      */
     public function actionDelete($id)

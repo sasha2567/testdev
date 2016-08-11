@@ -7,6 +7,7 @@ class HelperFormat
 {
     /**
      * Get right format for date
+     *
      * @param $data
      * @return bool|int|string
      */

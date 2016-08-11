@@ -17,7 +17,7 @@ class RegistrationForm extends Model
 {
     public $username;
     public $password;
-    public $confirmpassword;
+    public $confirmPassword;
     public $email;
 
     private $_user = false;
@@ -30,16 +30,19 @@ class RegistrationForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required', 'message' => 'Please choose a username.'],
+            [['username', 'email', 'password', 'confirmPassword'], 'required', 'message' => 'Please enter all fields'],
+            // username and email are uniq
+            [['username', 'email'], 'validateUser', 'message' => 'Choose another username or email'],
             // email has to be a valid email address
             ['email', 'email', 'message' => 'Please enter another email'],
             // password is validated by validatePassword()
-            [['password', 'confirmpassword'], 'validatePassword'],
+            [['password', 'confirmPassword'], 'validatePassword', 'message' => 'Passwords must match'],
         ];
     }
 
     /**
      * Logs in a user using the provided username and password.
+     *
      * @return boolean whether the user is logged in successfully
      */
     public function registration()
@@ -59,13 +62,33 @@ class RegistrationForm extends Model
 
     /**
      * Validate user password and password hash
+     *
      * @param $password
      * @param $confirmPassword
      * @return int
      */
-    public function validatePassword($password, $confirmPassword)
+    public function validatePassword($attribute, $params)
     {
-        return strcasecmp($password, $confirmPassword);
+        if (!$this->hasErrors()) {
+            if ($this->password !== $this->confirmPassword) {
+                $this->addError($attribute, 'Passwords must match');
+            }
+        }
+    }
+
+    /**
+     * Validate uniq username and email
+     *
+     * @return bool
+     */
+    public function validateUser($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $user = User::findByUsername($this->username) ? User::findByUsername($this->username) : User::findByEmail($this->email);
+            if (!$user) {
+                $this->addError($attribute, 'Choose another username or email');
+            }
+        }
     }
 
     /**
@@ -76,7 +99,7 @@ class RegistrationForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findByUsername($this->username) ? User::findByUsername($this->username) : User::findByEmail($this->email);
         }
         return $this->_user;
     }

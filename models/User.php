@@ -20,7 +20,10 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * Find user by user_id = [$id]
+     *
+     * @param int|string $id
+     * @return array|null|ActiveRecord
      */
     public static function findIdentity($id)
     {
@@ -52,22 +55,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @inheritdoc
+     * Return user_id from User
+     *
+     * @return mixed
      */
     public function getId()
     {
         return $this->user_id;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
-    public function validatePassword($password, $passwordCorrect)
-    {
-        return Yii::$app->getSecurity()->validatePassword($password, $passwordCorrect);
     }
 
     /**

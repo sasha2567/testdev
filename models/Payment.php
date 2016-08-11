@@ -27,7 +27,7 @@ class Payment extends ActiveRecord
     }
 
     /**
-     * Get payment by $id
+     * Get payment by payment_id = [$id]
      *
      * @return ActiveRecord
      */
@@ -99,6 +99,7 @@ class Payment extends ActiveRecord
 
     /**
      * Get query for find all
+     *
      * @return \yii\db\ActiveQuery
      */
     public static function getAllPayments()
@@ -113,6 +114,7 @@ class Payment extends ActiveRecord
 
     /**
      * Get first payment date
+     *
      * @return bool|int|string
      */
     public static function getStartData()
@@ -123,6 +125,7 @@ class Payment extends ActiveRecord
 
     /**
      * Get last payment date
+     *
      * @return bool|int|string
      */
     public static function getEndData()
@@ -133,6 +136,7 @@ class Payment extends ActiveRecord
 
     /**
      * Delete payment by 'payment_id' = $id
+     *
      * @param $id
      */
     public function paymentDelete($id)

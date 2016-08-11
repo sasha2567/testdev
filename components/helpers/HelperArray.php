@@ -6,6 +6,7 @@ class HelperArray
 {
     /**
      * Return first element in $array
+     *
      * @param $array
      * @return mixed
      */
@@ -16,6 +17,7 @@ class HelperArray
 
     /**
      * Return last element in $array
+     *
      * @param $array
      * @return mixed
      */
