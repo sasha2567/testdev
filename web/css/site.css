@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    color: #adadad;
 }
 
 .wrap {
@@ -88,4 +89,94 @@ a.desc:after {
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
+}
+
+.table-payment .row div{
+    width: 36%;
+    display: inline-block;
+}
+
+.table-payment  .row {
+    height: 50px;
+    padding: 15px 6px;
+    border-bottom: 1px solid ;
+    font-size: 16px;
+}
+
+.table-payment  .row :first-child {
+    width: 10%;
+}
+
+.table-payment  .row:first-child {
+    border-bottom: 2px solid ;
+}
+
+.table-payment  .row :nth-child(3) {
+    width: 30%;
+}
+
+.table-payment  .row :nth-child(4) {
+    width: 8%;
+}
+
+.table-payment .row-title{
+    font-weight: bold;
+}
+
+.table-payment  .odd {
+    background-color: rgba(247,252,255,0.05);
+}
+
+.table-payment  .even {
+    background-color: rgba(173, 176, 179, 0.12);
+}
+
+.table-payment  .delete-button p {
+    width: auto !important;
+    background-color: #ec2620;
+    padding: 2px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.table-payment  .delete-button p a {
+    color: #fff;
+}
+
+.from-to {
+    font-weight: bold;
+}
+
+.payment-title p.payment-data-title {
+    float: left;
+}
+
+.payment-title div.payment-add {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.payment-add-button {
+    padding: 10px 5px;
+    top: -1%;
+    background-color: #00b3ee;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.navbar-inverse {
+    background-color: #d0dcff;
+    border-color: #d0dcff;
+}
+
+.navbar-inverse .container li a,
+.navbar-inverse .container a,
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: #d0dcff;
 }

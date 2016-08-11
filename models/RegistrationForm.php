@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasha2567
- * Date: 04.08.16
- * Time: 13:06
- */
 
 namespace app\models;
 
@@ -50,7 +44,7 @@ class RegistrationForm extends Model
      */
     public function registration()
     {
-        if(User::findByEmail($this->email) === null && null === User::findByUsername($this->username)){
+        if (User::findByEmail($this->email) === null && null === User::findByUsername($this->username)) {
             if ($this->validate()) {
                 $user = new User();
                 $user->username = $this->username;

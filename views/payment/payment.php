@@ -50,27 +50,27 @@ $this->title = 'Get Payment';
                     </div>
                 </div>
             <?php
-                for ($i = 0;  $i < + count($data); $i++) :
+                for ($i = 0;  $i < + count($listing); $i++) :
             ?>
-                <div class="row <?=($i%2==0)?'even':'odd'?>">
+                    <div class="row <?=($i%2==0)?'even':'odd'?>">
                     <div class="numbers">
-                        <span><?=($pagination->offset * $pagination->getPage() + $i + 1)?></span>
+                        <span><?=($pages->offset * $pages->getPage() + $i + 1)?></span>
                     </div>
                     <div class="start-end-date">
-                        <span><?=$data[$i]->starts_at?></span> -
-                        <span><?=$data[$i]->ends_at?></span>
+                        <span><?=$listing[$i]->starts_at?></span> -
+                        <span><?=$listing[$i]->ends_at?></span>
                     </div>
                     <div class="user-email">
-                        <span><?=$data[$i]->user->email?></span>
+                        <span><?=$listing[$i]->user->email?></span>
                     </div>
                     <div class="delete-button">
 
                             <?php
-                                if(Yii::$app->user->identity->id === $data[$i]->user_userid) :
+                                if(Yii::$app->user->id === $listing[$i]->user_userid) :
                             ?>
                                 <p>
                             <?php
-                                    echo Html::a('Delete', Url::toRoute(['/payment/delete', 'id' => $data[$i]->payment_id]));
+                                    echo Html::a('Delete', Url::toRoute(['/payment/delete', 'id' => $listing[$i]->payment_id]));
                             ?>
                                 </p>
                             <?php
@@ -81,7 +81,7 @@ $this->title = 'Get Payment';
             <?php endfor; ?>
             </div>
             <?=LinkPager::widget([
-            'pagination' => $pagination,
+            'pagination' => $pages,
             ]);?>
         </div>
 

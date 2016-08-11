@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasha2567
- * Date: 05.08.16
- * Time: 17:13
- */
 
 namespace app\controllers;
 
@@ -39,13 +33,14 @@ class UserController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
+            echo '222';
             $this->redirect('/payment/index');
         }
 
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $this->redirect('/payment/index');
+            $this->redirect('../payment/index');
         }
 
         return $this->render('login', [
@@ -86,6 +81,6 @@ class UserController extends Controller
     {
         Yii::$app->user->logout();
 
-        $this->redirect('user/login');
+        $this->redirect('login');
     }
 }

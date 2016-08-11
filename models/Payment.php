@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasha2567
- * Date: 04.08.16
- * Time: 17:39
- */
 
 namespace app\models;
 
 
 use Yii;
-use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
+use app\components\helpers\HelperFormat;
 
 
 /**
@@ -22,7 +16,7 @@ use yii\db\ActiveRecord;
  */
 class Payment extends ActiveRecord
 {
-    const PAYMENTDAYS = [5, 20];
+    const PAYMENT_DAYS = [5, 20];
 
     /**
      * @return string the name of the table associated with this ActiveRecord class.
@@ -68,7 +62,7 @@ class Payment extends ActiveRecord
         $day = date("d", $newStartData);
         echo $payment->starts_at.' ';
         $end = 0;
-        foreach (self::PAYMENTDAYS as $days){
+        foreach (self::PAYMENT_DAYS as $days){
             if($day < $days){
                 $end = $days - 1;
                 echo $end;
@@ -76,12 +70,12 @@ class Payment extends ActiveRecord
             }
         }
         $monthAddFlag = false;
-        if(!$end){
-            $end = self::PAYMENTDAYS[0]-1;
+        if (!$end) {
+            $end = self::PAYMENT_DAYS[0]-1;
             $monthAddFlag = true;
         }
         $newEndData = strtotime("{$payment->starts_at}");
-        if($monthAddFlag){
+        if ($monthAddFlag) {
             $newEndData = strtotime("{$payment->starts_at} +1 month");
         }
         $tempDataArray = date('Y-m-d', $newEndData);
@@ -118,25 +112,13 @@ class Payment extends ActiveRecord
     }
 
     /**
-     * Get right format for date
-     * @param $data
-     * @return bool|int|string
-     */
-    public static function getDateOnFormat($data)
-    {
-        $dataStr = strtotime($data);
-        $dataStr = date('M j, Y', $dataStr);
-        return $dataStr;
-    }
-
-    /**
      * Get first payment date
      * @return bool|int|string
      */
     public static function getStartData()
     {
         $dataStr = ($data = self::getAllPayments()->orderBy('starts_at')->limit('1')->one()) ? $data->starts_at : '';
-        return self::getDateOnFormat($dataStr);
+        return HelperFormat::getDateOnFormat($dataStr);
     }
 
     /**
@@ -146,7 +128,7 @@ class Payment extends ActiveRecord
     public static function getEndData()
     {
         $dataStr = ($data = self::getAllPayments()->orderBy('ends_at desc')->limit('1')->one()) ? $data->ends_at : '';
-        return self::getDateOnFormat($dataStr);
+        return HelperFormat::getDateOnFormat($dataStr);
     }
 
     /**

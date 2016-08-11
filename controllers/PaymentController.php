@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasha2567
- * Date: 05.08.16
- * Time: 17:14
- */
 
 namespace app\controllers;
 
@@ -14,6 +8,7 @@ use app\models\Payment;
 use yii\web\Controller;
 use yii\data\Pagination;
 use app\components\helpers\HelperArray;
+use app\components\helpers\HelperFormat;
 
 
 class PaymentController extends Controller
@@ -48,19 +43,19 @@ class PaymentController extends Controller
         $query      = Payment::getAllPayments();
         $countQuery = clone $query;
         $pages      = new Pagination(['totalCount' => $countQuery->count()]);
-        $listing    = $query->orderBy('payment_id DESC')->offset($pages->offset)->limit($pages->limit)->all();
+        $listing    = $query->offset($pages->offset)->limit($pages->limit)->all();
         $first      = HelperArray::first($listing);
         $last       = HelperArray::last($listing);
 
         $data = [
             'pages'    => $pages,
             'listing'  => $listing,
-            'start_at' => $first ? Payment::getDateOnFormat($first->start_at) : null,
-            'end_at'   => $last ? Payment::getDateOnFormat($last->end_at) : null,
+            'start' => $first ? HelperFormat::getDateOnFormat($first->starts_at) : null,
+            'end'   => $last ? HelperFormat::getDateOnFormat($last->ends_at) : null,
         ];
         foreach ($listing as $row){
-            $row->ends_at = Payment::getDateOnFormat($row->ends_at);
-            $row->starts_at = Payment::getDateOnFormat($row->starts_at);
+            $row->ends_at = HelperFormat::getDateOnFormat($row->ends_at);
+            $row->starts_at = HelperFormat::getDateOnFormat($row->starts_at);
         }
         return $this->render('payment', $data);
     }
