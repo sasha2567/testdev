@@ -85,7 +85,7 @@ class RegistrationForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = User::findByUsername($this->username) ? User::findByUsername($this->username) : User::findByEmail($this->email);
-            if (!$user) {
+            if ($user) {
                 $this->addError($attribute, 'Choose another username or email');
             }
         }
