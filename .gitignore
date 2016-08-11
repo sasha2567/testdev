@@ -28,4 +28,3 @@ phpunit.phar
 
 # debug files
 /runtime
-/web/assets/*
