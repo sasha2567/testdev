@@ -8,7 +8,7 @@ class m160811_080512_test_db extends Migration
     public function up()
     {
         $this->createTable('alisjanskij_users', [
-            'user_id' => Schema::TYPE_PK . 'AUTOINCREMENT',
+            'user_id' => Schema::TYPE_PK . ' AUTOINCREMENT',
             'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'password' => $this->text()->notNull(),
