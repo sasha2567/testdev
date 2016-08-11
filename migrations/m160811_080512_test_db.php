@@ -7,7 +7,7 @@ class m160811_080512_test_db extends Migration
 {
     public function up()
     {
-        $this->execute('CREATE SEQUENCE user_id_seq');
+        //$this->execute('CREATE SEQUENCE user_id_seq');
         $this->createTable('alisjanskij_users', [
             'user_id' => Schema::TYPE_PK . ' DEFAULT NEXTVAL(\'user_id_seq\')',
             'username' => $this->string()->notNull()->unique(),
