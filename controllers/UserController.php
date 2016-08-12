@@ -33,7 +33,6 @@ class UserController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            echo '222';
             $this->redirect('/payment/index');
         }
 

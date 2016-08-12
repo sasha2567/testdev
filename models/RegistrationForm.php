@@ -31,7 +31,7 @@ class RegistrationForm extends Model
         return [
             // username and password are both required
             [['username', 'email', 'password', 'confirmPassword'], 'required', 'message' => 'Please enter all fields'],
-            // username and email are uniq
+            // username and email are unique
             [['username', 'email'], 'validateUser', 'message' => 'Choose another username or email'],
             // email has to be a valid email address
             ['email', 'email', 'message' => 'Please enter another email'],
@@ -47,15 +47,13 @@ class RegistrationForm extends Model
      */
     public function registration()
     {
-        if (User::findByEmail($this->email) === null && null === User::findByUsername($this->username)) {
-            if ($this->validate()) {
-                $user = new User();
-                $user->username = $this->username;
-                $user->email = $this->email;
-                $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
-                $user->created_at = date('Y-m-d');
-                return $user->save();
-            }
+        if ($this->validate()) {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+            $user->created_at = date('Y-m-d');
+            return $user->save();
         }
         return false;
     }
@@ -77,7 +75,7 @@ class RegistrationForm extends Model
     }
 
     /**
-     * Validate uniq username and email
+     * Validate unique username and email
      *
      * @return bool
      */

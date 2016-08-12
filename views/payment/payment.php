@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use app\components\helpers\HelperFormat;
 
 
 $this->title = 'Get Payment';
@@ -57,8 +58,8 @@ $this->title = 'Get Payment';
                         <span><?=($pages->offset * $pages->getPage() + $i + 1)?></span>
                     </div>
                     <div class="start-end-date">
-                        <span><?=$listing[$i]->starts_at?></span> -
-                        <span><?=$listing[$i]->ends_at?></span>
+                        <span><?=HelperFormat::getDateOnFormat($listing[$i]->starts_at)?></span> -
+                        <span><?=HelperFormat::getDateOnFormat($listing[$i]->ends_at)?></span>
                     </div>
                     <div class="user-email">
                         <span><?=$listing[$i]->user->email?></span>

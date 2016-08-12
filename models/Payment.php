@@ -113,28 +113,6 @@ class Payment extends ActiveRecord
     }
 
     /**
-     * Get first payment date
-     *
-     * @return bool|int|string
-     */
-    public static function getStartData()
-    {
-        $dataStr = ($data = self::getAllPayments()->orderBy('starts_at')->limit('1')->one()) ? $data->starts_at : '';
-        return HelperFormat::getDateOnFormat($dataStr);
-    }
-
-    /**
-     * Get last payment date
-     *
-     * @return bool|int|string
-     */
-    public static function getEndData()
-    {
-        $dataStr = ($data = self::getAllPayments()->orderBy('ends_at desc')->limit('1')->one()) ? $data->ends_at : '';
-        return HelperFormat::getDateOnFormat($dataStr);
-    }
-
-    /**
      * Delete payment by 'payment_id' = $id
      *
      * @param $id

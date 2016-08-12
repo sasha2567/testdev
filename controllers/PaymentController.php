@@ -53,15 +53,11 @@ class PaymentController extends Controller
             'start' => $first ? HelperFormat::getDateOnFormat($first->starts_at) : null,
             'end'   => $last ? HelperFormat::getDateOnFormat($last->ends_at) : null,
         ];
-        foreach ($listing as $row){
-            $row->ends_at = HelperFormat::getDateOnFormat($row->ends_at);
-            $row->starts_at = HelperFormat::getDateOnFormat($row->starts_at);
-        }
         return $this->render('payment', $data);
     }
 
     /**
-     * Add new payment record action
+     * Add new payment record action.
      *
      */
     public function actionAdd()
@@ -71,7 +67,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Delete payment record by $id
+     * Delete payment record by [$id] action.
      *
      * @param $id
      */

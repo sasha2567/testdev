@@ -16,7 +16,7 @@ class m160811_080512_test_db extends Migration
             'username' => $this->string()->notNull()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'password' => $this->text()->notNull(),
-            'craeted_at' => $this->date()->notNull(),
+            'created_at' => $this->date()->notNull(),
         ]);
 
         $this->createTable('alisjanskij_payments', [
