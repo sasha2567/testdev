@@ -18,8 +18,8 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/twitter_bootstrap.css',
         'css/site.css',
-        'css/twitter_bootstrap.css'
     ];
     public $js = [
     ];

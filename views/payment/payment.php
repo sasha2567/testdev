@@ -8,14 +8,14 @@ use yii\widgets\LinkPager;
 use app\components\helpers\HelperFormat;
 
 
-$this->title = 'Get Payment';
+$this->title = 'Get Payments';
 ?>
 <div class="site-payment">
 
     <div class="payment-title">
 
 
-        <p class="lead payment-data-title">Payment from
+        <p class="lead payment-data-title">Payments from
             <span class="from-to"><?=(isset($start) ? $start : '')?></span>
             to <span class="from-to"><?=(isset($end) ? $end : '')?></span>
         </p>
@@ -24,7 +24,7 @@ $this->title = 'Get Payment';
             <?php
                 echo Html::beginForm(['/payment/add'], 'post', ['class' => 'navbar-form']);
 
-                echo Html::submitButton('Create  Payment',['class' => 'btn btn-link payment-add-button', 'name' => 'paymentAdd']);
+                echo Html::submitButton('Create  Payment',['class' => 'btn btn-link btn btn-primary', 'name' => 'paymentAdd']);
 
                 echo Html::endForm();
             ?>
@@ -36,36 +36,28 @@ $this->title = 'Get Payment';
 
         <div class="row table-payment">
             <div class="col-lg-12">
-                <div class="row row-title">
-                    <div class="numbers">
-                        <span>#</span>
-                    </div>
-                    <div class="start-date">
-                        <span>Dates</span>
-                    </div>
-                    <div class="user-email">
-                        <span>Creator</span>
-                    </div>
-                    <div class="delete-button">
-                        <span>Action</span>
-                    </div>
-                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Dates</th>
+                        <th>Creator</th>
+                        <th>Action</th>
+                    </tr>
             <?php
                 for ($i = 0;  $i < + count($listing); $i++) :
             ?>
-                    <div class="row <?=($i%2==0)?'even':'odd'?>">
-                    <div class="numbers">
+                    <tr>
+                    <td>
                         <span><?=($pages->offset * $pages->getPage() + $i + 1)?></span>
-                    </div>
-                    <div class="start-end-date">
+                    </td>
+                    <td>
                         <span><?=HelperFormat::getDateOnFormat($listing[$i]->starts_at)?></span> -
                         <span><?=HelperFormat::getDateOnFormat($listing[$i]->ends_at)?></span>
-                    </div>
-                    <div class="user-email">
+                    </td>
+                    <td>
                         <span><?=$listing[$i]->user->email?></span>
-                    </div>
-                    <div class="delete-button">
-
+                    </td>
+                    <td>
                             <?php
                                 if(Yii::$app->user->id === $listing[$i]->user_userid) :
                             ?>
@@ -77,14 +69,14 @@ $this->title = 'Get Payment';
                             <?php
                                 endif;
                             ?>
-                    </div>
-                </div>
+                    </td>
+                    </tr>
             <?php endfor; ?>
+                </table>
             </div>
             <?=LinkPager::widget([
-            'pagination' => $pages,
+                'pagination' => $pages,
             ]);?>
         </div>
-
     </div>
 </div>

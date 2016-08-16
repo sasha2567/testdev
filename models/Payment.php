@@ -117,9 +117,11 @@ class Payment extends ActiveRecord
      *
      * @param $id
      */
-    public function paymentDelete($id)
+    public function paymentDelete($id, $user_id)
     {
         $payment = Payment::findOne($id);
-        $payment->delete();
+        if ($payment->user->id == $user_id) {
+            $payment->delete();
+        }
     }
 }

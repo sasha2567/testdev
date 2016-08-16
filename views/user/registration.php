@@ -11,36 +11,31 @@ $this->title = 'Registration';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-registration">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to registration on Application:</p>
 
     <?php $form = ActiveForm::begin([
         'id' => 'registration-form',
-        'options' => ['class' => 'form-horizontal'],
+        'options' => ['class' => 'form-horizontal form-group-sm'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "<div class=\"form-group\">{label}<div class=\"col-sm-6\">{input}</div>{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
 
-    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'username')->textInput(['autofocus' => true])->textInput(['placeholder' => 'Login']) ?>
 
-    <?= $form->field($model, 'email')->textInput() ?>
+    <?= $form->field($model, 'email')->textInput()->textInput(['placeholder' => 'Email']) ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
+    <?= $form->field($model, 'password')->passwordInput()->textInput(['placeholder' => 'Password']) ?>
 
     <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Registration', ['class' => 'btn btn-primary', 'name' => 'registration-button']) ?>
+        <div class="col-sm-offset-1 col-sm-12 registration">
+            <?= Html::submitButton('Registration', ['class' => 'btn btn-primary col-sm-6', 'name' => 'registration-button']) ?>
         </div>
     </div>
 
     <?php ActiveForm::end(); ?>
 
-    <div class="col-lg-offset-1" style="color:#999;">
+    <div class="col-lg-offset-1 col-sm-12 registration" style="color:#999;">
         <p>Wait! I already have account! <a href="/user/login">Login</a></p>
     </div>
 

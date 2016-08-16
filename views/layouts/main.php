@@ -75,7 +75,8 @@ AppAsset::register($this);
         NavBar::begin([
             'brandLabel' => $brandLabel,
             'options' => [
-                'class' => 'navbar-inverse',
+                'class' => 'alert alert-info',
+                'role' => 'alert',
             ],
         ]);
         NavBar::end();
@@ -83,9 +84,6 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
         <?= $content ?>
     </div>
 </div>

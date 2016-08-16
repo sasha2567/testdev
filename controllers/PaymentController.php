@@ -73,7 +73,7 @@ class PaymentController extends Controller
      */
     public function actionDelete($id)
     {
-        (new Payment())->paymentDelete($id);
+        (new Payment())->paymentDelete($id, Yii::$app->user->getId());
         $this->redirect('index');
     }
 }
